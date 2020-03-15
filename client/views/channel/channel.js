@@ -14,6 +14,30 @@ Template.channel.helpers
         {
             var _id = Router.current().params._id;
             return ChannelSplitterNode.findOne({_id : _id});
+        },
+
+        // helper to show the username
+        user : function() 
+        {
+            return Meteor.users.findOne({_id: this._userId});
+        },
+
+        time : function() 
+        {
+            return moment(this.timestamp).format('h:mm a');
+        },
+
+        // helper to tell what date it is, 
+        // but only print the date if it differs from the last printed date 
+        //(use Template.instance())
+        date : function(messages)
+        {
+            var dateNow = moment(this.timestamp).calendar();
+            var instance = Template.instance();
+            if (!instance.date || instance.date != dateNow)
+            {
+                return instance.date = dateNow;
+            }
         }
     }
 );
@@ -35,7 +59,8 @@ Template.channel.events
                 value = value.replace("\n", "  \n");
                 
                 instance.find('textarea').value = '';
-                Messages.insert({channel : _id, message : value});
+                Messages.insert({channel : _id, message : value, _userId : Meteor.userId, timestamp: new Date() });
+                // reference to the user on a message
             }
         }
     }

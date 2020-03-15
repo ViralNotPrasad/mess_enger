@@ -1,8 +1,10 @@
 <template name = "channel">
     <ul>
         {{#each messages}}
+        <h2>{{date}}</h2>
         <li>
             <!-- markdown to enable rendering of newlines and paragraphs -->
+            <div>{{user.emails.[0].address}} {{time}}</div>
             {{#markdown}}
                 {{message}}
             {{/markdown}}
