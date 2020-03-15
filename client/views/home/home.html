@@ -1,5 +1,14 @@
 <!-- template for home listing channels -->
 <template name = "home">
+    
+    <!-- form to input new channels to home -->
+    <form>
+        <label for = "name"> Channel name: </label>
+        <input id = "name" type = "text">
+        <button type =  "submit"> Add </button>
+    </form>
+    <!-- form to input new channels to home -->
+
     <ul>
         {{#each channels}}
         <li>
@@ -8,3 +17,4 @@
         {{/each}}
     </ul>
 </template>
+<!-- template for home listing channels -->
