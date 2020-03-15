@@ -12,7 +12,10 @@
     <ul>
         {{#each channels}}
         <li>
-            {{name}}
+            <!-- link from home to a channel -->
+            <a href = "/channel/{{_id}}">
+                {{name}}
+            </a>
         </li>
         {{/each}}
     </ul>

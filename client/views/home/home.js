@@ -1,3 +1,15 @@
+//helper to show (find) all channels in home 
+Template.home.helpers
+(
+    {
+        channels : function()
+        {
+            return Channels.find();
+        }
+    }
+);
+
+// event handler to insert a channel
 Template.home.events
 (
     {

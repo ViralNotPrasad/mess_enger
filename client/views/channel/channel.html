@@ -2,8 +2,19 @@
     <ul>
         {{#each messages}}
         <li>
-            {{message}}
+            <!-- markdown to enable rendering of newlines and paragraphs -->
+            {{#markdown}}
+                {{message}}
+            {{/markdown}}
         </li>
         {{/each}}
     </ul>
+    
+    <!-- form w single line text area for new msgs -->
+    <form>
+    <textarea rows="1" cols="100"></textarea>
+    </form>
+
+    <!-- adding links to the channels in a channel -->
+    {{> home}}
 </template>
