@@ -59,7 +59,7 @@ Template.channel.events
                 value = value.replace("\n", "  \n");
                 
                 instance.find('textarea').value = '';
-                Messages.insert({channel : _id, message : value, _userId : Meteor.userId, timestamp: new Date() });
+                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
                 // reference to the user on a message
             }
         }

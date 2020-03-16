@@ -20,10 +20,11 @@ showing channels in home and in a channel itself using Template helpers (`home.j
 
 > add markdown to enable rendering of newlines and paragraphs (more) in messages - `meteor add markdown`
 > `meteor add accounts-password`, `meteor add accounts-ui` 
-> `meteor add momentjs:moment`
+> `meteor add momentjs:moment` , meteor remove momentjs:moment - [STDERR] TinyTest not found, `meteor add momentjs:moment@=2.10.3`
 
 ## 4] Add Users and Timestamp
 * reference to the user on a message 
 * show the username, use a helper
 * print time only if not today, use `moment.js` to localize time to tday/yday
 
+> `meteor remove auto publish`
