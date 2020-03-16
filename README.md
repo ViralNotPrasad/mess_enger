@@ -40,3 +40,6 @@ showing channels in home and in a channel itself using Template helpers (`home.j
 * addded a  layout with a yield for header, body, footer and aside
 * set it as default in the router
 * Move content into yields, i.e. the title should go in the header, messageForm in the footer and channels in aside.
+
+## 6] Adding SASS Styles
+* `meteor add fourseven:scss`

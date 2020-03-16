@@ -1,4 +1,3 @@
-
 // subscription to the 'messages' publication in the channel template
 Template.channel.onCreated
 (
