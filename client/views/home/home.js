@@ -1,3 +1,13 @@
+// subscription to the 'channels' publication in the home template
+Template.home.onCreated
+(
+    function()
+    {
+        this.subscribe('channels');
+        this.subscribe('allUserNames');
+    }
+);
+
 //helper to show (find) all channels in home 
 Template.home.helpers
 (

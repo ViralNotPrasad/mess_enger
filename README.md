@@ -27,7 +27,8 @@ showing channels in home and in a channel itself using Template helpers (`home.j
 * show the username, use a helper
 * print time only if not today, use `moment.js` to localize time to tday/yday
 
-> `meteor remove auto publish` - will subscribe to publications next
+> `meteor remove auto publish`
 * created publication for 'channels' and publish them all
 * created publication for 'messages' for a channel
 * creating publication for 'usernames' that we just created 
+* subscribed to each of them as required
