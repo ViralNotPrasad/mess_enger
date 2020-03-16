@@ -32,3 +32,6 @@ showing channels in home and in a channel itself using Template helpers (`home.j
 * created publication for 'messages' for a channel
 * creating publication for 'usernames' that we just created 
 * subscribed to each of them as required
+
+> `meteor remove insecure`
+* allow only logged in users to input msgs or channels
