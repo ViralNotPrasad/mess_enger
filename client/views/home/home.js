@@ -20,7 +20,7 @@ Template.home.helpers
 );
 
 // event handler to insert a channel
-Template.home.events
+Template.channelForm.events
 (
     {
         'submit form' : function(event, instance)

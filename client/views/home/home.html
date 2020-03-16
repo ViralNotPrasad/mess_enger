@@ -2,13 +2,13 @@
 <template name = "home">
 
     {{#contentFor 'aside'}}
-    
+    {{> channelForm}}
     <!-- form to input new channels to home -->
-    <form>
+    <!-- <form>
         <label for = "name"> Channel name: </label>
         <input id = "name" type = "text">
         <button type =  "submit"> Add </button>
-    </form>
+    </form> -->
     <!-- form to input new channels to home -->
 
     <ul>
@@ -27,3 +27,13 @@
 
 </template>
 <!-- template for home listing channels -->
+
+<template name = "channelForm">
+    <!-- form to input new channels to home -->
+    <form>
+        <label for = "name"> Channel name: </label>
+        <input id = "name" type = "text">
+        <button type =  "submit"> Add </button>
+    </form>
+    <!-- form to input new channels to home -->
+</template>
