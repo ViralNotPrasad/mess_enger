@@ -1,4 +1,9 @@
 <template name = "channel">
+
+    {{#contentFor 'header'}}
+        <h1>{{channel.name}}</h1>
+    {{/contentFor}}
+
     <ul>
         {{#each messages}}
         <h2>{{date}}</h2>
@@ -11,12 +16,22 @@
         </li>
         {{/each}}
     </ul>
+
+    {{#contentFor 'footer'}}
+        {{> messageForm}}
+    {{/contentFor}}
     
     <!-- form w single line text area for new msgs -->
-    <form>
+    <!-- <form>
     <textarea rows="1" cols="100"></textarea>
-    </form>
-
+    </form> -->
     <!-- adding links to the channels in a channel -->
+
     {{> home}}
+</template>
+
+<template name="messageForm">
+    <form>
+      <textarea rows="1" cols="100"></textarea>
+    </form>
 </template>

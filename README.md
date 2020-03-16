@@ -35,3 +35,8 @@ showing channels in home and in a channel itself using Template helpers (`home.j
 
 > `meteor remove insecure`
 * allow only logged in users to input msgs or channels
+
+## 5] Adding layouts
+* addded a  layout with a yield for header, body, footer and aside
+* set it as default in the router
+* Move content into yields, i.e. the title should go in the header, messageForm in the footer and channels in aside.

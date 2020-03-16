@@ -1,5 +1,7 @@
 <!-- template for home listing channels -->
 <template name = "home">
+
+    {{#contentFor 'aside'}}
     
     <!-- form to input new channels to home -->
     <form>
@@ -20,5 +22,8 @@
         {{/each}}
     </ul>
     {{> loginButtons}}
+
+    {{/contentFor}}
+
 </template>
 <!-- template for home listing channels -->

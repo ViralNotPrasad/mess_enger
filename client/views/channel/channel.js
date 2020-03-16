@@ -5,7 +5,7 @@ Template.channel.onCreated
     function()
     {
         var instance = this;
-        
+
         // Listen for changes to reactive variables (such as Router.current()).
         instance.autorun
         (
@@ -63,7 +63,11 @@ Template.channel.helpers
 
 // event handler that insert a message on enter (but not when shift is pressed) 
 // make sure the message has a reference to the current channel too
-Template.channel.events
+// Template.channel.events
+
+// We've moved the message form into a new template 
+// (messageForm), now we need to move the event map.
+Template.messageForm.events
 (
     {
         'keyup textarea' : function(event, instance)
