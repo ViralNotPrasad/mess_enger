@@ -66,25 +66,59 @@ Template.channel.helpers
 
 // We've moved the message form into a new template 
 // (messageForm), now we need to move the event map.
+msg_old = "";
+current_id =  null;
 Template.messageForm.events
 (
     {
+        
         'keyup textarea' : function(event, instance)
         {
-            // checking if event was pressed without the shift 
-            if (event.keyCode == 13 & !event.shift)
+            if(msg_old == "")
             {
                 var _id = Router.current().params._id;
                 var value = instance.find('textarea').value;
-                
+                    
                 // Markdown requires double spaces at the end of the line to force line-breaks.
                 value = value.replace("\n", "  \n");
-                
-                instance.find('textarea').value = '';
-                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
-                // reference to the user on a message
+                    
+                // instance.find('textarea').value = '';
+                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() },
+                function(err, docsInserted){ 
+                    // debugger;
+                    console.log(docsInserted); 
+                    alert(docsInserted); 
+                    current_id = docsInserted;
+                });
+                msg_old = value;
+                console.log("if 1 - -"+msg_old);
+            }
+            else
+            {
+                console.log("else - 1     "+msg_old);
+                var _id = Router.current().params._id;
+                var value = instance.find('textarea').value;
+                    
+                // Markdown requires double spaces at the end of the line to force line-breaks.
+                value = value.replace("\n", "  \n");
+               /* if( current_id == null) // befroe getting the _ID
+                {
+                    stringSoFar = ? 
+                }
+                else{*/
+                // instance.find('textarea').value = '';
+
+                // https://docs.mongodb.com/manual/reference/operator/update/
+                    Messages.update({_id : current_id},{$set:{message : value, timestamp: new Date()}});
+            }
+                    msg_old = value;
+
+                if (event.keyCode == 13 & !event.shift)
+                {
+                    instance.find('textarea').value = '';
+                    msg_old = ""; 
+                }
+
             }
         }
-    }
 );
-
