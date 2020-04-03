@@ -4,6 +4,9 @@
         <h1>{{channel.name}}</h1>
     {{/contentFor}}
 
+    <!-- LAME AUTOSCROLL -->
+    <!-- {{#contentFor 'footer'}} -->
+    <div id = "div_messages" style="height: 100%; width:50%; background-color: rgb(250, 179, 0);">
     <ul>
         {{#each messages}}
         <h2>{{date}}</h2>
@@ -16,6 +19,16 @@
         </li>
         {{/each}}
     </ul>
+    <!-- </div> -->
+
+    <br>
+    <br>
+
+    <!-- {{> messageForm}} -->
+
+</div>
+    <!-- LAME AUTOSCROLL -->
+    <!-- {{/contentFor}} -->
 
     {{#contentFor 'footer'}}
         {{> messageForm}}
@@ -32,6 +45,6 @@
 
 <template name="messageForm">
     <form>
-      <textarea rows="1" cols="100"></textarea>
+      <textarea rows="1" cols="109"></textarea>
     </form>
 </template>

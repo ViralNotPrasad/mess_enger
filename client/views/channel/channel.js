@@ -17,6 +17,36 @@ Template.channel.onCreated
     }
 );
 
+//////////////////////////
+Template.channel.onRendered
+(
+    function()
+    {
+        Meteor.defer
+        (
+            function()
+            {
+                console.info("scrolling...");
+                //GSAP ScrollToPlugin, other approaches produced similar results
+                TweenLite.to("#div_messages", .1, 
+                {
+                    scrollTo: 
+                    {
+                        y: "max" //scrolls completely down
+                    }, 
+                    onComplete: function() 
+                    {
+                        console.log("scrolled down ..."); //hide loading screen here
+                    }                
+                });     
+            }
+            );
+    }
+);
+/////////////////////////
+
+var autoScrollingIsActive = false;
+
 Template.channel.helpers
 (
     {
@@ -24,6 +54,7 @@ Template.channel.helpers
         messages : function()
         {
             var _id = Router.current().params._id;
+            $('#div_messages').scrollTop($('#div_messages').prop('#div_messages'));
             return Messages.find({_channel : _id});
         },
 
