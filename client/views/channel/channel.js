@@ -55,17 +55,6 @@ Template.channel.helpers
             // return Meteor.users.find();
         },
 
-        // user_display : function(messages)
-        // {
-        //     var dateNow = moment(this.timestamp).calendar();
-        //     console.log();
-        //     var instance = Template.instance();
-        //     if (!instance.date || instance.date != dateNow)
-        //     {
-        //         return instance.date = dateNow;
-        //     }
-        // },
-
         time : function() 
         {
             return moment(this.timestamp).format('h:mm a');
@@ -131,11 +120,6 @@ Template.messageForm.events
                     // var objDiv = document.getElementById("div_messages");
                     // objDiv.scrollTop = objDiv.scrollHeight;
 
-                    // console.log( (new Date()).toString())
-                    // console.log((new Date()).toLocaleString())
-                    // console.log( (new Date()).getTimezoneOffset())
-                    // console.log( navigator.userAgent)
-                    // console.log(moment.version)
                 // }
                 instance.find('textarea').value = '';
                 // console.log("new msg, so i should auto scroll")
