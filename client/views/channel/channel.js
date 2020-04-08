@@ -18,6 +18,7 @@ Template.channel.onCreated
     }
 );
 
+//Modify this to include words
 function getFormattedDate() {
     var date = new Date();
     var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -77,7 +78,9 @@ Template.channel.helpers
             {
                 // return instance.date = dateNow;
                 return instance.date = getFormattedDate();
-                // add code to convert from GMT to EST and more.
+                // add code to convert from GMT to EST 
+                // add code to conver to words
+                // add code to reduce redundancy
             }
         }
     }
@@ -88,7 +91,7 @@ Template.channel.helpers
 // make sure the message has a reference to the current channel too
 // Template.channel.events
 
-// We've moved the message form into a new template 
+// moved the message form into a new template 
 // (messageForm), now we need to move the event map.
 
 // KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
@@ -114,14 +117,12 @@ Template.messageForm.events
                     value = value.replace("\n", "  \n");
                     instance.find('textarea').value = '';
                     Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
+                    // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
+                    //Todo - replace
 
                     window.scrollTo(0,document.body.scrollHeight);
                     // var objDiv = document.getElementById("div_messages");
                     // objDiv.scrollTop = objDiv.scrollHeight;
-
-                    // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
-                    //Todo - replace
-
 
                     // console.log( (new Date()).toString())
                     // console.log((new Date()).toLocaleString())
@@ -130,7 +131,6 @@ Template.messageForm.events
                     // console.log(moment.version)
                 // }
                 instance.find('textarea').value = '';
-
                 // console.log("new msg, so i should auto scroll")
                 // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
 
