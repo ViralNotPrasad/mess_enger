@@ -32,7 +32,7 @@ Template.channel.helpers
         messages : function()
         {
             var _id = Router.current().params._id;
-            $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
+            // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
             return Messages.find({_channel : _id});
         },
 
@@ -46,7 +46,12 @@ Template.channel.helpers
         // helper to show the username
         user : function() 
         {
-            return Meteor.users.findOne({_id: this._userId});
+            var _id = Router.current().params._id;
+            console.log("inside the user function:" + this._userId);
+            console.log("msg:" + this.message);
+            //console.log(Messages.find({_channel : _id}));
+            //return Meteor.users.findOne({_id: this._userId});
+            return this.username;
             // return Meteor.users.find();
         },
 
@@ -99,6 +104,8 @@ Template.channel.helpers
 // current_id =  null;
 // KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
 
+
+
 Template.messageForm.events
 (
     {
@@ -116,7 +123,7 @@ Template.messageForm.events
                 // {
                     value = value.replace("\n", "  \n");
                     instance.find('textarea').value = '';
-                    Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
+                    Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: new Date() });
                     // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
                     //Todo - replace
 

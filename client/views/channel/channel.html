@@ -12,7 +12,10 @@
         <h2>{{date}}</h2>
         <li>
             <!-- markdown to enable rendering of newlines and paragraphs -->
-            <div>{{user.username}} {{time}}</div>
+            <!-- both user and username work btw js -->
+            <!-- <div>{{username}} {{user}} {{time}}</div> -->
+            <div>{{username}} {{time}}</div>
+            <!-- <div>{{user_display}} {{time}}</div> -->
             {{#markdown}}
                 {{message}}
             {{/markdown}}
