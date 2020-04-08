@@ -28,8 +28,8 @@ Template.channelForm.events
             event.preventDefault();
             var name = instance.find('input').value;
             instance.find('input').value = '';
-
-            Channels.insert({name : name});
+            if (name != '')
+                Channels.insert({name : name});
         }
     }
 );

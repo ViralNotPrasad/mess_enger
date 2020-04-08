@@ -12,40 +12,17 @@ Template.channel.onCreated
             {
                 var channel = Router.current().params._id;
                 instance.subscribe('messages',channel);
+                instance.subscribe('allUserNames');
             }
         );
     }
 );
 
-//////////////////////////
-Template.channel.onRendered
-(
-    function()
-    {
-        Meteor.defer
-        (
-            function()
-            {
-                console.info("scrolling...");
-                //GSAP ScrollToPlugin, other approaches produced similar results
-                TweenLite.to("#div_messages", .1, 
-                {
-                    scrollTo: 
-                    {
-                        y: "max" //scrolls completely down
-                    }, 
-                    onComplete: function() 
-                    {
-                        console.log("scrolled down ..."); //hide loading screen here
-                    }                
-                });     
-            }
-            );
-    }
-);
-/////////////////////////
-
-var autoScrollingIsActive = false;
+function getFormattedDate() {
+    var date = new Date();
+    var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    return str;
+};
 
 Template.channel.helpers
 (
@@ -54,7 +31,7 @@ Template.channel.helpers
         messages : function()
         {
             var _id = Router.current().params._id;
-            $('#div_messages').scrollTop($('#div_messages').prop('#div_messages'));
+            $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
             return Messages.find({_channel : _id});
         },
 
@@ -69,7 +46,19 @@ Template.channel.helpers
         user : function() 
         {
             return Meteor.users.findOne({_id: this._userId});
+            // return Meteor.users.find();
         },
+
+        // user_display : function(messages)
+        // {
+        //     var dateNow = moment(this.timestamp).calendar();
+        //     console.log();
+        //     var instance = Template.instance();
+        //     if (!instance.date || instance.date != dateNow)
+        //     {
+        //         return instance.date = dateNow;
+        //     }
+        // },
 
         time : function() 
         {
@@ -82,14 +71,18 @@ Template.channel.helpers
         date : function(messages)
         {
             var dateNow = moment(this.timestamp).calendar();
+            console.log();
             var instance = Template.instance();
             if (!instance.date || instance.date != dateNow)
             {
-                return instance.date = dateNow;
+                // return instance.date = dateNow;
+                return instance.date = getFormattedDate();
+                // add code to convert from GMT to EST and more.
             }
         }
     }
 );
+
 
 // event handler that insert a message on enter (but not when shift is pressed) 
 // make sure the message has a reference to the current channel too
@@ -108,18 +101,40 @@ Template.messageForm.events
     {
         'keyup textarea' : function(event, instance)
         {
+            event.preventDefault();
+
             // checking if event was pressed without the shift 
             if (event.keyCode == 13 & !event.shift)
             {
                 var _id = Router.current().params._id;
                 var value = instance.find('textarea').value;
-                
                 // Markdown requires double spaces at the end of the line to force line-breaks.
-                value = value.replace("\n", "  \n");
-                
+                // if (value !== null)
+                // {
+                    value = value.replace("\n", "  \n");
+                    instance.find('textarea').value = '';
+                    Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
+
+                    window.scrollTo(0,document.body.scrollHeight);
+                    // var objDiv = document.getElementById("div_messages");
+                    // objDiv.scrollTop = objDiv.scrollHeight;
+
+                    // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
+                    //Todo - replace
+
+
+                    // console.log( (new Date()).toString())
+                    // console.log((new Date()).toLocaleString())
+                    // console.log( (new Date()).getTimezoneOffset())
+                    // console.log( navigator.userAgent)
+                    // console.log(moment.version)
+                // }
                 instance.find('textarea').value = '';
-                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), timestamp: new Date() });
-                // reference to the user on a message
+
+                // console.log("new msg, so i should auto scroll")
+                // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
+
+                
             }
         }
     }
