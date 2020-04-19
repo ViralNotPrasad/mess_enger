@@ -1,3 +1,5 @@
+// @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 $aside: 20%;
 $primary: #827D9D;
 
@@ -7,11 +9,15 @@ $primary: #827D9D;
 $padding: 16px;
 
 body {
-  font-family: sans-serif;
+  font-family: noyh_regular !important;
   // background-color: $primary;
   margin: 0;
   padding: 0;
   background-color: $primary;
+}
+
+h1, h2 {
+  font-family: noyh_regular !important;
 }
 
 header,
@@ -20,18 +26,21 @@ footer {
   position: fixed;
 }
 
-header {
-    float: right;
-    // padding-top: 2%;
-    // padding-bottom: 2%;
-    background: rgb(255, 255, 255);
-    width: 100%;
-    border-bottom: solid #B1ABCF 1px;
-    h1 {
-      margin-left: 10px;
-      line-height: 53px;
-    }
+// nav {
+//     float: right;
+//     display: block;
+//     // padding-top: 2%;
+//     // padding-bottom: 2%;
+//     background: rgb(255, 255, 255);
+//     width: 100%;
+//     border-bottom: solid #B1ABCF 1px;
+h1.channel_title {
+  padding-top: 2%;
+  margin-left: 10px;
+  line-height: 53px;
+  // border-bottom: solid #B1ABCF 1px;
 }
+
 
 aside {
     width: $aside;
@@ -51,12 +60,11 @@ aside {
     &, a {
       color: lighten($primary, 30%);
     }
-    input {
-      outline:none;
-      -webkit-appearance: none;
-      box-shadow: none !important;
-      background: #bac;
-      border-radius: 2px;
+    input.input {
+      background-color: #bac !important;
+      border-radius: 5px !important;
+      border: $primary ;
+      color: $primary !important;
     }
   }
   
@@ -67,9 +75,29 @@ aside {
     h2{
       font-size: 10px;
     }
+
+    img.avatar
+    {
+      width: 40px;
+      float: left;
+    }
+    div.msg_info
+    {
+      margin-left: 50px;
+    }
+
+    p.content{
+      margin-left: 70px;
+      font-size: 20px;
+    }
+
+    li {
+      border: white;
+      border-bottom: $primary;
+    }
   }
   
-  footer {
+footer {
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -86,9 +114,17 @@ aside {
   }
 
 
+
   @font-face {
-    font-family: 'Roboto';
+    font-family: 'noyh_black';
+    src: url('/fonts/noyh/NoyhGeometricSlim-Black.woff2') format('woff2');
+    font-weight: normal;
     font-style: normal;
-    font-weight: 400;
-    src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/oMMgfZMQthOryQo9n22dcuvvDin1pK8aKteLpeZ5c0A.woff2) format('woff2');
-  }
+}
+
+@font-face {
+  font-family: 'noyh_regular';
+  src: url('/fonts/noyh/NoyhGeometricSlim-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

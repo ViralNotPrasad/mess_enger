@@ -1,32 +1,60 @@
 <template name = "channel">
-    
-        <header>
-        <h1>{{# each channel.name}} {{else}} # random {{/each}} </h1>
-        </header>
+
+    <nav class="navbar navbar-default ">
+        <div class = "container-fluid">
+            <div class="navbar-header" >
+                <h1 class = "channel_title" >{{# each channel.name}} {{else}} # random {{/each}} </h1>
+           </div>
+        </div>
+    </nav>
     <!-- LAME AUTOSCROLL -->
     <!-- {{#contentFor 'footer'}} -->
-    <div id = "div_messages" style="height: 100%; width:50%; ">
-    <ul>
+    <div class = "container" id = "div_messages" >
+    <ul class = "list-group">
         {{#each messages}}
-        <h2 class = "timestamp">{{date}}</h2>
-        <li>
+        <!-- bugs with date: time did not match with actual time -->
+        <!-- <h2 class = "timestamp">{{date}}</h2> --> 
+        
+        <li class = "list-group-item ">
+            <img class = "avatar" src="/images/avatar.png" alt="avatar">
             <!-- markdown to enable rendering of newlines and paragraphs -->
             <!-- both user and username work btw js -->
             <!-- <div>{{username}} {{user}} {{time}}</div> -->
-            <div>{{username}} {{time}}</div>
+            <div class = "msg_info" >
+                {{username}} {{time}}
+            </div>
             <!-- <div>{{user_display}} {{time}}</div> -->
-            {{#markdown}}
+            <p class = "content">
+            <!-- {{#markdown}} -->
                 {{message}}
-            {{/markdown}}
+            <!-- {{/markdown}} -->
+            </p>
         </li>
+
+        
         {{/each}}
+
+        <li class = "list-group-item ">
+            <img class = "avatar" src="/images/avatar.png" alt="avatar">
+            <!-- markdown to enable rendering of newlines and paragraphs -->
+            <!-- both user and username work btw js -->
+            <!-- <div>{{username}} {{user}} {{time}}</div> -->
+            <div class = "msg_info" >
+                {{username}} {{time}}
+            </div>
+            <!-- <div>{{user_display}} {{time}}</div> -->
+            <p class = "content">
+            <!-- {{#markdown}} -->
+                this is a huge placeholder
+            <!-- {{/markdown}} -->
+            </p>
+        </li>
     </ul>
     <!-- </div> -->
 
     <br>
     <br>
 
-    {{> messageForm}}
 </div>
     <!-- LAME AUTOSCROLL -->
     <!-- {{/contentFor}} -->
@@ -46,6 +74,6 @@
 
 <template name="messageForm">
     <form>
-      <textarea rows="2" cols="110" placeholder="type your message..."></textarea>
+      <textarea rows="2" cols="110" placeholder="   type your message..."></textarea>
     </form>
 </template>
