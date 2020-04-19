@@ -1,15 +1,14 @@
 <template name = "channel">
-
-    {{#contentFor 'header'}}
-        <h1>{{channel.name}}</h1>
-    {{/contentFor}}
-
+    
+        <header>
+        <h1>{{# each channel.name}} {{else}} # random {{/each}} </h1>
+        </header>
     <!-- LAME AUTOSCROLL -->
     <!-- {{#contentFor 'footer'}} -->
-    <div id = "div_messages" style="height: 100%; width:50%; background-color: rgb(250, 179, 0);">
+    <div id = "div_messages" style="height: 100%; width:50%; ">
     <ul>
         {{#each messages}}
-        <h2>{{date}}</h2>
+        <h2 class = "timestamp">{{date}}</h2>
         <li>
             <!-- markdown to enable rendering of newlines and paragraphs -->
             <!-- both user and username work btw js -->
@@ -47,6 +46,6 @@
 
 <template name="messageForm">
     <form>
-      <textarea rows="2" cols="110"></textarea>
+      <textarea rows="2" cols="110" placeholder="type your message..."></textarea>
     </form>
 </template>
