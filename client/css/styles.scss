@@ -1,7 +1,10 @@
 $aside: 220px;
 $top: 53px;
+$primary: #827D9D;
 
-$primary: hsl(212, 100%, 50%);
+
+
+
 
 $padding: 16px;
 
@@ -53,4 +56,12 @@ aside {
     margin-left: $aside;
     padding: $padding;
     background: white;
+  }
+
+
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/oMMgfZMQthOryQo9n22dcuvvDin1pK8aKteLpeZ5c0A.woff2) format('woff2');
   }
