@@ -1,0 +1,33 @@
+<!-- template for home listing channels -->
+<template name = "home">
+
+    {{#contentFor 'aside'}}
+    <h1> Scaleable Chat </h1>
+    {{> loginButtons}}
+
+    <div>
+    <h2> Channels</h2>
+    <ul>
+        {{#each channels}}
+        <li>
+            <!-- link from home to a channel -->
+            <a href = "/channel/{{_id}}">
+                {{name}}
+            </a>
+        </li>
+        {{/each}}
+    </ul>
+    {{> channelForm}}
+    </div>
+    {{/contentFor}}
+</template>
+<!-- template for home listing channels -->
+
+<template name = "channelForm">
+    <!-- form to input new channels to home -->
+    <form class="input-group mb-3">
+        <input class = "input form-control " id = "name" type = "text" placeholder="a new channel">
+        <button type =  "submit" class="btn btn-light"> Add </button>
+    </form>
+    <!-- form to input new channels to home -->
+</template>
