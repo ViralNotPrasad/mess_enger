@@ -4,6 +4,10 @@ import '../api/channels.js';
 import '../api/messages.js'; 
 import '../api/accounts.js'; 
 
+import {
+    Messages
+} from '../api/messages.js'; 
+
 // subscription to the 'messages' publication in the channel template
 Template.channel.onCreated
 (
