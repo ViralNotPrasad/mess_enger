@@ -24,3 +24,4 @@ accounts-ui
 accounts-password
 iron:router
 fourseven:scss
+momentjs:moment
