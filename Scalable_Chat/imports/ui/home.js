@@ -8,6 +8,9 @@ import './home.html';
 import {
     Channels
 } from '../api/channels.js';
+
+
+
 // subscription to the 'channels' publication in the home template
 Template.home.onCreated(
     function () {

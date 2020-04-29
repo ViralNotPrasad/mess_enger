@@ -2,6 +2,12 @@ import { Mongo } from 'meteor/mongo';
 
 export const Messages = new Mongo.Collection('messages');
 
+// define and publish collection in api
+// // import collection import {
+//     Channels
+// } from '../api/channels.js';
+// 
+
 // publication for 'messages' for a channel
 if (Meteor.isServer)
 {
