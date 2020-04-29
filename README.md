@@ -1,5 +1,5 @@
 # Scalable Chat
 ## Mess_enger Reconstructed
-[] - push github
-[] - server 
-[] - 
+[]- push github
+[]- server 
+[]- 
