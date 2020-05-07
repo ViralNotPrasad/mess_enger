@@ -93,9 +93,8 @@ Template.channel.helpers
 // current_id =  null;
 // KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
 
-/*
-var msg_old = "";
-var time = new Date();
+const id = null;
+var val = null;
 
 Template.messageForm.events
 (
@@ -103,52 +102,72 @@ Template.messageForm.events
         'keyup textarea' : function(event, instance)
         {
             event.preventDefault();
+            console.log(" enter "+id);
 
-            var _id = Router.current().params._id;                
+            var _id = Router.current().params._id;
             var value = instance.find('textarea').value;
-            value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
+            var time = new Date();
+            // Markdown requires double spaces at the end of the line to force line-breaks.
 
-            if (msg_old == "")
+            // the user has just started typing, 
+            //a new entry for the message is yet to be made in the collection
+            if (id == null && val == "")
             {
-                time = new Date();
-                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
-                console.log(Messages.findOne({timestamp:time}._id));
-                window.scrollTo(0,document.body.scrollHeight);
-                msg_old = value;
+                console.log ("If(1)");
+                value = value.replace("\n", "  \n");
+                //Collection.Insert 
+                //Update ID so that you can reference the msg later;
+                try 
+                {
+                    const id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                        // console.log("1) " + id);
+                    val = value;
+                } 
+                catch (error)
+                {
+                    alert("this did not work");
+                }
             }
-            else
+            else (id != null && val != "")
             {
-                var update_id = Messages.findOne({timestamp:time}._id);
-                time = new Date();
-                Messages.update( update_id, { 
-                    $set: {message : value, timestamp : time},
-                });
-                msg_old = value;
+                console.log("If(2)");
+                value = value.replace("\n", "  \n");
+                //Collection.Update
+                //Use id 
+                try 
+                {
+                    Messages.update({_id : id}, {$set : {message : value, timestamp : time}});
+                    
+                    // ({_channel : _id, message : value, _userId : Meteor.userId(), 
+                        // username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                    console.log("2) OK");
+                } 
+                catch (error)
+                {
+                    alert("this did not work -- 2");
+                }
             }
+            // else if()
+            // {}
+            // else
+            // {
+            //     alert("check all");
+            // }
 
-            if (event.keyCode == 13 & !event.shift)
+            if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
+                id = null;
                 instance.find('textarea').value = '';
-                msg_old = "";
             }
-        }
-    }
-);
-*/
+            window.scrollTo(0,document.body.scrollHeight);
+            //MAKE ID and VAL null again omg!
 
-// /*
-Template.messageForm.events
-(
-    {
-        'keyup textarea' : function(event, instance)
-        {
-            event.preventDefault();
-
+            /*
             if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
                 var _id = Router.current().params._id;
                 var value = instance.find('textarea').value;
-
                 value = value.replace("\n", "  \n");// Markdown requires double spaces at the end of the line to force line-breaks.
 
                 instance.find('textarea').value = '';
@@ -175,8 +194,7 @@ Template.messageForm.events
 
                 window.scrollTo(0,document.body.scrollHeight);
                 instance.find('textarea').value = '';
-            }
+            }*/
         }
     }
 );
-// */
