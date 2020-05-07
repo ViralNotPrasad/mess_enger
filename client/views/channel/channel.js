@@ -93,7 +93,9 @@ Template.channel.helpers
 // current_id =  null;
 // KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
 
-
+/*
+var msg_old = "";
+var time = new Date();
 
 Template.messageForm.events
 (
@@ -102,31 +104,79 @@ Template.messageForm.events
         {
             event.preventDefault();
 
-            // checking if event was pressed without the shift 
+            var _id = Router.current().params._id;                
+            var value = instance.find('textarea').value;
+            value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
+
+            if (msg_old == "")
+            {
+                time = new Date();
+                Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                console.log(Messages.findOne({timestamp:time}._id));
+                window.scrollTo(0,document.body.scrollHeight);
+                msg_old = value;
+            }
+            else
+            {
+                var update_id = Messages.findOne({timestamp:time}._id);
+                time = new Date();
+                Messages.update( update_id, { 
+                    $set: {message : value, timestamp : time},
+                });
+                msg_old = value;
+            }
+
             if (event.keyCode == 13 & !event.shift)
             {
-                var _id = Router.current().params._id;
-                var value = instance.find('textarea').value;
-                // Markdown requires double spaces at the end of the line to force line-breaks.
-                // if (value !== null)
-                // {
-                    value = value.replace("\n", "  \n");
-                    instance.find('textarea').value = '';
-                    Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: new Date() });
-                    // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
-                    //Todo - replace
-
-                    window.scrollTo(0,document.body.scrollHeight);
-                    // var objDiv = document.getElementById("div_messages");
-                    // objDiv.scrollTop = objDiv.scrollHeight;
-
-                // }
                 instance.find('textarea').value = '';
-                // console.log("new msg, so i should auto scroll")
-                // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
-
-                
+                msg_old = "";
             }
         }
     }
 );
+*/
+
+// /*
+Template.messageForm.events
+(
+    {
+        'keyup textarea' : function(event, instance)
+        {
+            event.preventDefault();
+
+            if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
+            {
+                var _id = Router.current().params._id;
+                var value = instance.find('textarea').value;
+
+                value = value.replace("\n", "  \n");// Markdown requires double spaces at the end of the line to force line-breaks.
+
+                instance.find('textarea').value = '';
+                
+                var time = new Date();
+                try {
+                    const id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                    console.log(typeof(id) + " - " + id);
+                    console.log("okay this works");
+                } catch (error){
+                    alert("this did not work");
+                }
+
+                // Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                //     username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time }).then(function(id){
+                //         console.log(id);
+                //     }).catch(function(error){
+                //         alert("MAY NEED METEOR _ NEW")
+                //     });
+                // console.log(Messages.findOne({timestamp:time}));
+                // var arrar = Messages.findOne({timestamp:time}).fetch();
+                // console.log(arrar);
+
+                window.scrollTo(0,document.body.scrollHeight);
+                instance.find('textarea').value = '';
+            }
+        }
+    }
+);
+// */
