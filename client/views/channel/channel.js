@@ -79,49 +79,35 @@ Template.channel.helpers
         }
     }
 );
-
-
 // event handler that insert a message on enter (but not when shift is pressed) 
 // make sure the message has a reference to the current channel too
-// Template.channel.events
-
+// Template.channel.events 
 // moved the message form into a new template 
 // (messageForm), now we need to move the event map.
 
-// KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
-// msg_old = "";
-// current_id =  null;
-// KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
-
-const id = null;
-var val = null;
+var msg_id = ""; // = "";
+var val = ""; // = "";
 
 Template.messageForm.events
 (
     {
+        
         'keyup textarea' : function(event, instance)
         {
             event.preventDefault();
-            console.log(" enter "+id);
 
             var _id = Router.current().params._id;
-            var value = instance.find('textarea').value;
             var time = new Date();
-            // Markdown requires double spaces at the end of the line to force line-breaks.
+            var value = instance.find('textarea').value;
+            value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
+            window.scrollTo(0,document.body.scrollHeight);
 
-            // the user has just started typing, 
-            //a new entry for the message is yet to be made in the collection
-            if (id == null && val == "")
+            if (msg_id === "" && val === "")
             {
-                console.log ("If(1)");
-                value = value.replace("\n", "  \n");
-                //Collection.Insert 
-                //Update ID so that you can reference the msg later;
                 try 
                 {
-                    const id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                    msg_id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
                         username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
-                        // console.log("1) " + id);
                     val = value;
                 } 
                 catch (error)
@@ -129,40 +115,31 @@ Template.messageForm.events
                     alert("this did not work");
                 }
             }
-            else (id != null && val != "")
+            else //(id !== null && val != null)
             {
-                console.log("If(2)");
-                value = value.replace("\n", "  \n");
-                //Collection.Update
-                //Use id 
+                
                 try 
                 {
-                    Messages.update({_id : id}, {$set : {message : value, timestamp : time}});
-                    
-                    // ({_channel : _id, message : value, _userId : Meteor.userId(), 
-                        // username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
-                    console.log("2) OK");
-                } 
+                    // Messages.update(id, {$set : {message : value, timestamp : time}});
+                    const boo = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
+                    console.log("2) OK: return = " + boo);
+                    //Msg.update returns the 'number' 0 inside of boo,
+                    //Not sure if _id should be returned, but this is incorrect for sure
+                }
                 catch (error)
                 {
                     alert("this did not work -- 2");
                 }
             }
-            // else if()
-            // {}
-            // else
-            // {
-            //     alert("check all");
-            // }
-
+            
             if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
-                id = null;
                 instance.find('textarea').value = '';
+                msg_id = '';
+                val = '';
+                
             }
-            window.scrollTo(0,document.body.scrollHeight);
-            //MAKE ID and VAL null again omg!
-
+            
             /*
             if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
