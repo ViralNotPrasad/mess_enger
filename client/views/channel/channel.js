@@ -121,8 +121,13 @@ Template.messageForm.events
                 try 
                 {
                     // Messages.update(id, {$set : {message : value, timestamp : time}});
-                    const boo = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
-                    console.log("2) OK: return = " + boo);
+                    // console.log("value -"+ value);
+
+                    if(value === "")
+                        Messages.remove(msg_id);
+                    else
+                        var change = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
+                    console.log("2) OK: return = " + change);
                     //Msg.update returns the 'number' 0 inside of boo,
                     //Not sure if _id should be returned, but this is incorrect for sure
                 }
