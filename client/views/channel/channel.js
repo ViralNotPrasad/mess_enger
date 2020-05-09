@@ -124,7 +124,11 @@ Template.messageForm.events
                     // console.log("value -"+ value);
 
                     if(value === "")
+                    {
                         Messages.remove(msg_id);
+                        msg_id = '';
+                        val = '';
+                    }
                     else
                         var change = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
                     console.log("2) OK: return = " + change);
