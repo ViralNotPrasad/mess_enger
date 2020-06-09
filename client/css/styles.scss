@@ -9,7 +9,7 @@ $primary: #827D9D;
 $padding: 16px;
 
 body {
-  font-family: noyh_regular !important;
+  font-family: Lato !important;
   // background-color: $primary;
   margin: 0;
   padding: 0;
@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2 {
-  font-family: noyh_regular !important;
+  font-family: Lato !important;
 }
 
 header,
@@ -116,15 +116,15 @@ footer {
 
 
   @font-face {
-    font-family: 'noyh_black';
-    src: url('/fonts/noyh/NoyhGeometricSlim-Black.woff2') format('woff2');
+    font-family: 'Lato_black';
+    src: url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-  font-family: 'noyh_regular';
-  src: url('/fonts/noyh/NoyhGeometricSlim-Regular.woff') format('woff');
+  font-family: 'Lato';
+  src: url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
   font-weight: normal;
   font-style: normal;
 }
