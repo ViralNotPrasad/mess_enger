@@ -90,6 +90,7 @@ aside {
 
     img.avatar
     {
+      padding-top: 8px;
       width: 40px;
       float: left;
     }
@@ -99,8 +100,9 @@ aside {
     }
 
     p.content{
-      margin-left: 70px;
+      margin-left: 50px;
       font-size: 20px;
+      margin-bottom: 0;
     }
 
     li {
