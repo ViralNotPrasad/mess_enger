@@ -79,54 +79,108 @@ Template.channel.helpers
         }
     }
 );
-
-
 // event handler that insert a message on enter (but not when shift is pressed) 
 // make sure the message has a reference to the current channel too
-// Template.channel.events
-
+// Template.channel.events 
 // moved the message form into a new template 
 // (messageForm), now we need to move the event map.
 
-// KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
-// msg_old = "";
-// current_id =  null;
-// KEYSTROKE LEVEL CODE, UNCOMMENT AND DEBUG LATER
-
-
+var msg_id = ""; // = "";
+var val = ""; // = "";
 
 Template.messageForm.events
 (
     {
+        
         'keyup textarea' : function(event, instance)
         {
             event.preventDefault();
 
-            // checking if event was pressed without the shift 
-            if (event.keyCode == 13 & !event.shift)
+            var _id = Router.current().params._id;
+            var time = new Date();
+            var value = instance.find('textarea').value;
+            value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
+            window.scrollTo(0,document.body.scrollHeight);
+
+            if (msg_id === "" && val === "")
+            {
+                try 
+                {
+                    msg_id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                    val = value;
+                } 
+                catch (error)
+                {
+                    alert("this did not work");
+                }
+            }
+            else //(id !== null && val != null)
+            {
+                
+                try 
+                {
+                    // Messages.update(id, {$set : {message : value, timestamp : time}});
+                    // console.log("value -"+ value);
+
+                    if(value === "")
+                    {
+                        Messages.remove(msg_id);
+                        msg_id = '';
+                        val = '';
+                    }
+                    else
+                        var change = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
+                    console.log("2) OK: return = " + change);
+                    //Msg.update returns the 'number' 0 inside of boo,
+                    //Not sure if _id should be returned, but this is incorrect for sure
+                }
+                catch (error)
+                {
+                    alert("this did not work -- 2");
+                }
+            }
+            
+            if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
+            {
+                instance.find('textarea').value = '';
+                msg_id = '';
+                val = '';
+                
+            }
+            
+            /*
+            if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
                 var _id = Router.current().params._id;
                 var value = instance.find('textarea').value;
-                // Markdown requires double spaces at the end of the line to force line-breaks.
-                // if (value !== null)
-                // {
-                    value = value.replace("\n", "  \n");
-                    instance.find('textarea').value = '';
-                    Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: new Date() });
-                    // Messages.insert({_channel : _id, message : value, _name : Meteor.userId(), timestamp: new Date() });
-                    //Todo - replace
+                value = value.replace("\n", "  \n");// Markdown requires double spaces at the end of the line to force line-breaks.
 
-                    window.scrollTo(0,document.body.scrollHeight);
-                    // var objDiv = document.getElementById("div_messages");
-                    // objDiv.scrollTop = objDiv.scrollHeight;
-
-                // }
                 instance.find('textarea').value = '';
-                // console.log("new msg, so i should auto scroll")
-                // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
-
                 
-            }
+                var time = new Date();
+                try {
+                    const id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                    console.log(typeof(id) + " - " + id);
+                    console.log("okay this works");
+                } catch (error){
+                    alert("this did not work");
+                }
+
+                // Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
+                //     username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time }).then(function(id){
+                //         console.log(id);
+                //     }).catch(function(error){
+                //         alert("MAY NEED METEOR _ NEW")
+                //     });
+                // console.log(Messages.findOne({timestamp:time}));
+                // var arrar = Messages.findOne({timestamp:time}).fetch();
+                // console.log(arrar);
+
+                window.scrollTo(0,document.body.scrollHeight);
+                instance.find('textarea').value = '';
+            }*/
         }
     }
 );
