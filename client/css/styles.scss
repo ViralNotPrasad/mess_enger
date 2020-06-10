@@ -75,6 +75,10 @@ aside {
     margin-left: $aside;
     background-color: white;
 
+    li.list-group-item:hover {
+      background-color: #edecf5;
+    }
+
     .channel-title
     {
       position: fixed;
