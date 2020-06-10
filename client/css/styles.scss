@@ -7,6 +7,12 @@ $primary: #827D9D;
 
 
 $padding: 16px;
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
 
 body {
   font-family: Lato !important;
@@ -72,6 +78,7 @@ aside {
   }
 
   article {
+    height: 100%;
     margin-left: $aside;
     background-color: white;
 
@@ -89,6 +96,8 @@ aside {
       width: 100%;
     }
     #div_messages{
+      height: calc(100% - 110px);
+      overflow: auto;
       padding-top: 100px;
     }
     h2{
