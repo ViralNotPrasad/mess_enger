@@ -31,6 +31,9 @@ Template.channel.helpers
         // helper that finds messages for the current channel
         messages : function()
         {
+            console.log('34');
+            window.scrollTo(0,document.body.scrollHeight);
+            // $('.list-group li:last-child')[0].scrollIntoView();
             var _id = Router.current().params._id;
             // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
             return Messages.find({_channel : _id});
@@ -58,6 +61,17 @@ Template.channel.helpers
         time : function() 
         {
             return moment(this.timestamp).format('h:mm a');
+        },
+        
+        // autoscorll function, return empty content, called everytime a new msg is loaded
+        auto_s : function() 
+        {
+            console.log("auto_s logged");
+            if($('.list-group li').length != 0)
+            {
+                $('.list-group li:last-child')[0].scrollIntoView();
+            }
+            return null;
         },
 
         // helper to tell what date it is, 
@@ -101,6 +115,7 @@ Template.messageForm.events
             var value = instance.find('textarea').value;
             value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
             window.scrollTo(0,document.body.scrollHeight);
+            $('.list-group li:last-child')[0].scrollIntoView();
 
             if (msg_id === "" && val === "")
             {
