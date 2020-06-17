@@ -36,7 +36,9 @@ Template.channel.helpers
             // $('.list-group li:last-child')[0].scrollIntoView();
             var _id = Router.current().params._id;
             // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
-            return Messages.find({_channel : _id});
+            
+            // return Messages.find({_channel : _id}, {sort: { last_update_time: 1 }});
+            return Messages.find({_channel : _id}, {sort: { timestamp: 1 }});
         },
 
         // showing the channel name in the channel
@@ -62,12 +64,12 @@ Template.channel.helpers
         {
             return moment(this.timestamp).format('h:mm a');
         },
-        
+
         // autoscorll function, return empty content, called everytime a new msg is loaded
         auto_s : function() 
         {
             console.log("auto_s logged");
-            if($('.list-group li').length != 0)
+            if($('.list-group li').length != 0 )
             {
                 $('.list-group li:last-child')[0].scrollIntoView();
             }
@@ -115,14 +117,16 @@ Template.messageForm.events
             var value = instance.find('textarea').value;
             value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
             window.scrollTo(0,document.body.scrollHeight);
-            $('.list-group li:last-child')[0].scrollIntoView();
-
+            if($('.list-group li').length != 0 )
+            {
+                $('.list-group li:last-child')[0].scrollIntoView();
+            }
             if (msg_id === "" && val === "")
             {
                 try 
                 {
                     msg_id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
-                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time, last_update_time: time});
                     val = value;
                 } 
                 catch (error)
@@ -145,7 +149,7 @@ Template.messageForm.events
                         val = '';
                     }
                     else
-                        var change = Messages.update({_id : msg_id}, {$set : {message : value /*, timestamp : time*/}});
+                        var change = Messages.update({_id : msg_id}, {$set : {message : value, last_update_time: time}});
                     console.log("2) OK: return = " + change);
                     //Msg.update returns the 'number' 0 inside of boo,
                     //Not sure if _id should be returned, but this is incorrect for sure
