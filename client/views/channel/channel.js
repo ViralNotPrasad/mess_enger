@@ -126,7 +126,7 @@ Template.messageForm.events
                 try 
                 {
                     msg_id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
-                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time, last_update_time: time});
+                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time, last_update_time: time, typing_state: 0});
                     val = value;
                 } 
                 catch (error)
@@ -164,6 +164,7 @@ Template.messageForm.events
             
             if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
             {
+                Messages.update({_id : msg_id}, {$set : {typing_state: 1}});
                 instance.find('textarea').value = '';
                 msg_id = '';
                 val = '';
