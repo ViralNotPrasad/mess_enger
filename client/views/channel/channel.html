@@ -14,14 +14,22 @@
         {{#each messages}}
         <!-- bugs with date: time did not match with actual time -->
         <!-- <h2 class = "timestamp">{{date}}</h2> --> 
+        <!-- <li {{#if isTyping typing_state}} class="red"{{/if}}>typing...</li> -->
+
         
-        <li class = "list-group-item ">
+
+        <li class = "list-group-item {{#if isTyping typing_state}}typing{{/if}}">
             <img class = "avatar" src="/images/avatar.png" alt="avatar">
             <!-- markdown to enable rendering of newlines and paragraphs -->
             <!-- both user and username work btw js -->
             <!-- <div>{{username}} {{user}} {{time}}</div> -->
             <div class = "msg_info" >
                 {{username}} {{time}} 
+                {{#if isTyping typing_state}} 
+                typing...
+                {{/if}}
+                
+                
             </div>
             <!-- <div>{{user_display}} {{time}}</div> -->
             <p class = "content">

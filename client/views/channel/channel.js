@@ -40,7 +40,9 @@ Template.channel.helpers
             // return Messages.find({_channel : _id}, {sort: { last_update_time: 1 }});
             return Messages.find({_channel : _id}, {sort: { timestamp: 1 }});
         },
-
+        isTyping: function (state) {
+            return state === 0;
+        },
         // showing the channel name in the channel
         channel : function()
         {
