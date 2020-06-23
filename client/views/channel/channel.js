@@ -151,6 +151,8 @@ Template.messageForm.events
                     else
                         var change = Messages.update({_id : msg_id}, {$set : {message : value, last_update_time: time}});
                     console.log("2) OK: return = " + change);
+
+                    // $('.list-group li:last-child').css("background-color", "rgba(156, 245, 237, 0.5)");
                     //Msg.update returns the 'number' 0 inside of boo,
                     //Not sure if _id should be returned, but this is incorrect for sure
                 }
@@ -165,7 +167,7 @@ Template.messageForm.events
                 instance.find('textarea').value = '';
                 msg_id = '';
                 val = '';
-                
+                // $('.list-group li:last-child').css("background-color", "#fff");
             }
             
             /*
