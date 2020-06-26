@@ -25,6 +25,16 @@ function getFormattedDate() {
     return str;
 };
 
+$('#div_messages').scroll(function()
+{
+    // console.log("scroll");
+    alert("bottom!");
+    // if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    //     alert("bottom!");
+    // }
+});
+
+
 Template.channel.helpers
 (
     {
@@ -32,8 +42,10 @@ Template.channel.helpers
         messages : function()
         {
             console.log('34');
-            window.scrollTo(0,document.body.scrollHeight);
-            // $('.list-group li:last-child')[0].scrollIntoView();
+            
+            // if(atTheBottom){
+                window.scrollTo(0,document.body.scrollHeight);
+            // }// $('.list-group li:last-child')[0].scrollIntoView();
             var _id = Router.current().params._id;
             // $('#div_messages').scrollTop($('#div_messages').prop('scrollHeight'));
             
@@ -70,7 +82,6 @@ Template.channel.helpers
         // autoscorll function, return empty content, called everytime a new msg is loaded
         auto_s : function() 
         {
-            console.log("auto_s logged");
             if($('.list-group li').length != 0 )
             {
                 $('.list-group li:last-child')[0].scrollIntoView();
@@ -114,22 +125,29 @@ Template.messageForm.events
         {
             event.preventDefault();
 
+            if (event.which !== 0 &&
+                !event.ctrlKey && !event.metaKey && !event.altKey
+            ) {
+                
+            
             var _id = Router.current().params._id;
-            var time = new Date();
+            var time = new Date();            
             var value = instance.find('textarea').value;
             value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
-            window.scrollTo(0,document.body.scrollHeight);
+            // window.scrollTo(0,document.body.scrollHeight);
+            console.log("textarea val: " + value);
             if($('.list-group li').length != 0 )
             {
                 $('.list-group li:last-child')[0].scrollIntoView();
             }
-            if (msg_id === "" && val === "")
+            if (msg_id === "" && val === "" && value.trim().length !== 0)
             {
                 try 
                 {
                     msg_id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
                         username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time, last_update_time: time, typing_state: 0});
                     val = value;
+                    console.log("val: " + val.trim().length);
                 } 
                 catch (error)
                 {
@@ -152,7 +170,7 @@ Template.messageForm.events
                     }
                     else
                         var change = Messages.update({_id : msg_id}, {$set : {message : value, last_update_time: time}});
-                    console.log("2) OK: return = " + change);
+                    // console.log("2) OK: return = " + change);
 
                     // $('.list-group li:last-child').css("background-color", "rgba(156, 245, 237, 0.5)");
                     //Msg.update returns the 'number' 0 inside of boo,
@@ -205,6 +223,13 @@ Template.messageForm.events
                 window.scrollTo(0,document.body.scrollHeight);
                 instance.find('textarea').value = '';
             }*/
+
+        }
         }
     }
+
+
+
+
+
 );
