@@ -84,6 +84,15 @@ aside {
     margin-left: $aside;
     background-color: white;
 
+    div.alert
+    {
+      top: 89px;
+      left: 47%;
+      position: absolute;
+      z-index: 1000;
+      visibility: visible;
+    }
+    
     li.list-group-item:hover {
       background-color: #edecf5;
     }

@@ -101,6 +101,11 @@ Template.channel.helpers
                 //     'scrolled'
                 // );
             }
+            else
+            {
+                $('.alert').show();
+                $('.alert').css('visibility', 'visible').delay(3000).fadeOut();
+            }
             return null;
         },
 
