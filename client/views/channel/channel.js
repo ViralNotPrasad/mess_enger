@@ -34,7 +34,6 @@ $('#div_messages').scroll(function()
     // }
 });
 
-
 Template.channel.helpers
 (
     {
@@ -82,9 +81,25 @@ Template.channel.helpers
         // autoscorll function, return empty content, called everytime a new msg is loaded
         auto_s : function() 
         {
-            if($('.list-group li').length != 0 )
+            // if() {
+            //     console.log("bottom!");
+            // }
+
+            var scrolltop = $('#div_messages').scrollTop() ;
+            var innerheight = $('#div_messages').innerHeight();
+            var scrollheight = $('#div_messages')[0].scrollHeight - 79;
+            var scroll = (scrolltop + innerheight == scrollheight);
+            // console.log(
+            //     ' scrolltop + innerheight: ' + (scrolltop + innerheight) + ' scrollheight: ' + scrollheight + 
+            //     ' scroll_boolean: ' +  scroll
+            // );
+
+            if($('.list-group li').length != 0 && scroll)
             {
                 $('.list-group li:last-child')[0].scrollIntoView();
+                // console.log(
+                //     'scrolled'
+                // );
             }
             return null;
         },
@@ -136,7 +151,12 @@ Template.messageForm.events
             value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
             // window.scrollTo(0,document.body.scrollHeight);
             console.log("textarea val: " + value);
-            if($('.list-group li').length != 0 )
+
+            var scrolltop = $('#div_messages').scrollTop() ;
+            var innerheight = $('#div_messages').innerHeight();
+            var scrollheight = $('#div_messages')[0].scrollHeight;
+
+            if($('.list-group li').length != 0)
             {
                 $('.list-group li:last-child')[0].scrollIntoView();
             }
