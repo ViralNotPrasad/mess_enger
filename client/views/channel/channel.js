@@ -34,6 +34,32 @@ $('#div_messages').scroll(function()
     // }
 });
 
+function auto_scroll()
+{
+    var scrolltop = $('#div_messages').scrollTop() ;
+    var innerheight = $('#div_messages').innerHeight();
+    var scrollheight = $('#div_messages')[0].scrollHeight - 79;
+    var scroll = (scrolltop + innerheight <= scrollheight);
+    console.log(
+        ' scrolltop + innerheight: ' + (scrolltop + innerheight) + ' scrollheight: ' + scrollheight + 
+        ' scroll_boolean: ' +  scroll
+    );
+
+    if($('.list-group li').length != 0 && scroll)
+    {
+        $('.list-group li:last-child')[0].scrollIntoView();
+        // console.log(
+        //     'scrolled'
+        // );
+    }
+    else
+    {
+        $('.alert').show();
+        $('.alert').css('visibility', 'visible').delay(3000).fadeOut();
+    }
+    return null;
+};
+
 Template.channel.helpers
 (
     {
@@ -81,32 +107,7 @@ Template.channel.helpers
         // autoscorll function, return empty content, called everytime a new msg is loaded
         auto_s : function() 
         {
-            // if() {
-            //     console.log("bottom!");
-            // }
-
-            var scrolltop = $('#div_messages').scrollTop() ;
-            var innerheight = $('#div_messages').innerHeight();
-            var scrollheight = $('#div_messages')[0].scrollHeight - 79;
-            var scroll = (scrolltop + innerheight == scrollheight);
-            // console.log(
-            //     ' scrolltop + innerheight: ' + (scrolltop + innerheight) + ' scrollheight: ' + scrollheight + 
-            //     ' scroll_boolean: ' +  scroll
-            // );
-
-            if($('.list-group li').length != 0 && scroll)
-            {
-                $('.list-group li:last-child')[0].scrollIntoView();
-                // console.log(
-                //     'scrolled'
-                // );
-            }
-            else
-            {
-                $('.alert').show();
-                $('.alert').css('visibility', 'visible').delay(3000).fadeOut();
-            }
-            return null;
+            auto_scroll(); 
         },
 
         // helper to tell what date it is, 
@@ -154,7 +155,6 @@ Template.messageForm.events
             var time = new Date();            
             var value = instance.find('textarea').value;
             value = value.replace("\n", "  \n"); // Markdown requires double spaces at the end of the line to force line-breaks.
-            // window.scrollTo(0,document.body.scrollHeight);
             console.log("textarea val: " + value);
 
             var scrolltop = $('#div_messages').scrollTop() ;
@@ -179,14 +179,11 @@ Template.messageForm.events
                     alert("this did not work");
                 }
             }
-            else //(id !== null && val != null)
+            else
             {
                 
                 try 
                 {
-                    // Messages.update(id, {$set : {message : value, timestamp : time}});
-                    // console.log("value -"+ value);
-
                     if(value === "")
                     {
                         Messages.remove(msg_id);
@@ -195,11 +192,6 @@ Template.messageForm.events
                     }
                     else
                         var change = Messages.update({_id : msg_id}, {$set : {message : value, last_update_time: time}});
-                    // console.log("2) OK: return = " + change);
-
-                    // $('.list-group li:last-child').css("background-color", "rgba(156, 245, 237, 0.5)");
-                    //Msg.update returns the 'number' 0 inside of boo,
-                    //Not sure if _id should be returned, but this is incorrect for sure
                 }
                 catch (error)
                 {
@@ -213,7 +205,6 @@ Template.messageForm.events
                 instance.find('textarea').value = '';
                 msg_id = '';
                 val = '';
-                // $('.list-group li:last-child').css("background-color", "#fff");
             }
             
             /*
