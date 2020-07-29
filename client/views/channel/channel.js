@@ -1,4 +1,6 @@
 // subscription to the 'messages' publication in the channel template
+
+
 Template.channel.onCreated
 (
     function()
@@ -206,46 +208,13 @@ Template.messageForm.events
                 msg_id = '';
                 val = '';
             }
-            
-            /*
-            if (event.keyCode == 13 & !event.shift) // checking if event was pressed without the shift 
-            {
-                var _id = Router.current().params._id;
-                var value = instance.find('textarea').value;
-                value = value.replace("\n", "  \n");// Markdown requires double spaces at the end of the line to force line-breaks.
-
-                instance.find('textarea').value = '';
-                
-                var time = new Date();
-                try {
-                    const id = Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
-                        username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time });
-                    console.log(typeof(id) + " - " + id);
-                    console.log("okay this works");
-                } catch (error){
-                    alert("this did not work");
-                }
-
-                // Messages.insert({_channel : _id, message : value, _userId : Meteor.userId(), 
-                //     username:Meteor.users.findOne({_id:  Meteor.userId()}).username, timestamp: time }).then(function(id){
-                //         console.log(id);
-                //     }).catch(function(error){
-                //         alert("MAY NEED METEOR _ NEW")
-                //     });
-                // console.log(Messages.findOne({timestamp:time}));
-                // var arrar = Messages.findOne({timestamp:time}).fetch();
-                // console.log(arrar);
-
-                window.scrollTo(0,document.body.scrollHeight);
-                instance.find('textarea').value = '';
-            }*/
-
         }
         }
     }
-
-
-
-
-
 );
+
+$('#div_messages').bind('DOMSubtreeModified', function(e) {
+    height = $('#div_messages li:last-child').find('p').height();
+    console.log('DOM'+ height);
+    console.log('DOM CHANGED');
+});
